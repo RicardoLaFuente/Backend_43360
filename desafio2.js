@@ -58,7 +58,7 @@ class ProductManager {
     }
 
     getProducts() {
-       // return this.products;
+        //return this.products;
        const data = JSON.parse(readFileSync(`productos.json`, "utf-8"));
        return data;
     }
@@ -169,16 +169,17 @@ nuevosProductos.addProduct(product4);
 nuevosProductos.addProduct(product5);
 //nuevosProductos.addProduct(product6);
 
-console.log(nuevosProductos.getProducts())
+//console.log(nuevosProductos.getProducts())
 
 //console.log("hola mundo")
 //console.log(nuevosProductos.getProductsById(3))
 
-nuevosProductos.writeFileProduct();
-nuevosProductos.readFileProduct();
+//nuevosProductos.writeFileProduct();
+//nuevosProductos.readFileProduct();
 //nuevosProductos.deleteProduct(2);
 //nuevosProductos.updateProduct(2, { title: "nuevo", description: "nuenoo", price: "24", thumbnail: "nuevo", stock: "35" })
 
 module.exports = {
     ProductManager : nuevosProductos
 }
+//export default ProductManager
