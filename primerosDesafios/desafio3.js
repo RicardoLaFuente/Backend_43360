@@ -1,12 +1,10 @@
 const express = require('express');
 const { ProductManager } = require('./desafio2');
-//const product = require('./productos.json')
 
 const app = express();
 const port = 8080;
 
 const productos = ProductManager.getProducts();
-//const productos = product
 console.log(productos)
 
 app.get('/products', (req, res) => {
