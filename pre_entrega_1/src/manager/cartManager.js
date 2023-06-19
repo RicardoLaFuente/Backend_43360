@@ -1,11 +1,12 @@
 import fs from "fs";
-//import carts from "../../../primerosDesafios/prueba";
+import productManager from "./productManager.js";
+
+const coderManager = new productManager("../pre_entrega_1/src/db/products.json")
 
 class cartManager {
 
     constructor(path) {
-        this.pat = path
-        //this.carts = []
+        this.path = path
     }
 
     //FileSystem
@@ -31,7 +32,7 @@ class cartManager {
 
     }
 
-    /*getCart() {
+    getCart() {
         // Validar si existe el archivo:
         if (!fs.existsSync(this.path)) {
             try {
@@ -50,95 +51,91 @@ class cartManager {
         } catch (err) {
             return `Reading error while getting carts: ${err}`;
         };
-    }*/
-    getCart() {
-        carts = this.readFile()
-        console.log(carts)
-        return carts
     }
-
+ 
     getCartById(id) {
         const carts = this.readFile()
         const cart = carts.find(cart => +cart.id === +id)
+        if (!cart) {
+            return `There's no cart with ID ${id}`;
+        }
 
         return cart
     }
 
-    /*addCart() {
-        
-        try {
-            const carts = this.getCart();
-            const id = this.generarID();
-            const newCart = {
-                id: id,
-                products: []
-            };
-
-            // Agregar carrito y escribir el archivo:
-            carts.push(newCart);
-            this.writeFile(carts);
-            return `Cart added with ID ${id}`;
-        } catch (err) {
-            return `Writing error while adding the cart: ${err}`;
-        };
-    }*/
     addCart() {
-        carts = this.getCart()
-        //const products = []
-        idGenerado = this.generarID()
+        const carts = this.getCart()
+        const idGenerado = this.generarID()
         const newCart = {
             id: idGenerado,
-            products:[]
+            products: []
         }
         carts.push(newCart)
         this.writeFile(carts)
     }
 
-    addProductToCart (cartId, productId) {
+    addProductToCart(cartId, productId) {
         try {
-			const carts = this.getCart();
-			const cart = carts.find(cart => +cart.id === +cartId);
-			const product = cart.products.find(product => +product.product === +productId);
+            const carts = this.getCart();
+            const cart = carts.find(cart => +cart.id === +cartId);
 
-			// Validar si el producto ya está agregado:
-			if (product) {
-				product.quantity += 1;
-			} else {
-				// Si no, agregarlo:
-				const newProduct = {
-					product: productId,
-					quantity: 1,
-				};
-				cart.products.push(newProduct);
-			};
+            // Validar Cart:
+            if (!cart) {
+                return `There's no cart with ID ${id}`;
+            } else {
+    
+                const prods = coderManager.getProducts();
+                const valProd = prods.find(vP => +vP.id === +productId);
+                //validar Product:
+                if (!valProd) {
+                    console.log(valProd)
+                    return `There's no product with ID ${productId}`;
+                    
+                } else {
+                    const product = cart.products.find(product => +product.product === +productId);         
+                        // Validar si el producto ya está agregado:
+                        if (product) {
+                            product.quantity += 1;
+                        } else {
+                            // Si no, agregarlo:
+                            const newProduct = {
+                                product: productId,
+                                quantity: 1,
+                            };
+                            cart.products.push(newProduct);
+                        };
+                    }
+                }
+            
+
             this.writeFile(carts);
-			return `Product ${productId} added to cart ${cartId}`;
-		} catch (err) {
-			return `Writing error while adding the product ${productId} to cart ${cartId}: ${err}`;
-		};
+            return `Product ${productId} added to cart ${cartId}`;
+        } catch (err) {
+            return `Writing error while adding the product ${productId} to cart ${cartId}: ${err}`;
+        };
     }
 
     deleteCart(id) {
-		try {
-			const carts = this.getCart();
-			const cart = carts.find(cart => +cart.id === +id);
+        try {
+            const carts = this.readFile();
+            const cart = carts.find(cart => +cart.id === +id);
 
-			// Validar ID:
-			if (!cart) {
-				return `There's no cart with ID ${id}`;
-			};
+            // Validar ID:
+            if (!cart) {
+                return `There's no cart with ID ${id}`;
+            };
 
-			// Si es correcto, borrar carrito y escribir el archivo:
-			cart.products = [];
-			this.writeFile(carts);
-			return `Cart ${id} deleted`;
-		} catch (err) {
-			return `Writing error while deleting the cart ${id}: ${err}`;
-		};
-	};
+            // Si es correcto, borrar carrito y escribir el archivo:
+            const cartFiltrado = carts.filter(cart => +cart.id != +id)
+            this.writeFile(cartFiltrado)
+            return `Cart ${id} deleted`;
+        } catch (err) {
+            return `Writing error while deleting the cart ${id}: ${err}`;
+        };
+    }
 
 
 }
-console.log("hola")
+console.log("hola desde cartManager")
 
 export default cartManager

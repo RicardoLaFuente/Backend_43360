@@ -1,14 +1,13 @@
 import  Router  from "express";
 
 import cartManager from "../manager/cartManager.js";
-const cartMng = new cartManager("../pre_entrega_1/src/db/products.json")
+const cartMng = new cartManager("../pre_entrega_1/src/db/carts.json")
 
 const router = Router()
 
 router.post("/", async(req,res)=>{
-   // const body = req.body
     cartMng.addCart()
-    res.send("Un carrito fue creado")
+    return res.status(200).send("carrito creado")
     
 })
 
@@ -24,7 +23,7 @@ router.post("/:cid/product/:pid", (req,res)=>{
     cartMng.addProductToCart(cid,pid)
 
     const cart =  cartMng.getCartById(cid);
-		return res.status(200).json(cart);
+		return res.status(200).send(cart);
 })
 
 router.delete("/:cid", (req,res)=>{
@@ -33,6 +32,5 @@ router.delete("/:cid", (req,res)=>{
     return res.status(200).send(deleteCart);
 
 })
-console.log(cartMng.getCart())
 
 export default router

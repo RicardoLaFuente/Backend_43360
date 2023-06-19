@@ -1,4 +1,3 @@
-import  Express  from "express";
 import  Router  from "express";
 
 import productManager from "../manager/productManager.js";
