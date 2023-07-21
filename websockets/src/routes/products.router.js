@@ -1,7 +1,7 @@
 import  Router  from "express";
 
 import productManager from "../manager/productManager.js";
-const coderManager = new productManager("../pre_entrega_1/src/db/products.json")
+const coderManager = new productManager("./src/db/products.json")
 
 const router = Router();
 

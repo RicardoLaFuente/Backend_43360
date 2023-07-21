@@ -1,7 +1,7 @@
 import  Router  from "express";
 
 import cartManager from "../manager/cartManager.js";
-const cartMng = new cartManager("../pre_entrega_1/src/db/carts.json")
+const cartMng = new cartManager("./src/db/carts.json")
 
 const router = Router()
 

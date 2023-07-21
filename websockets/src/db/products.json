@@ -16,5 +16,14 @@
         "code": 124,
         "stock": 20,
         "id": 5
+    },
+    {
+        "title": "new tor",
+        "description": "Torta Clasica",
+        "price": 3300,
+        "thumbnail": "ABCDEFGH",
+        "code": "1553",
+        "stock": 10,
+        "id": 6
     }
 ]

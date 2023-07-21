@@ -136,6 +136,5 @@ class cartManager {
 
 
 }
-console.log("hola desde cartManager")
 
 export default cartManager
